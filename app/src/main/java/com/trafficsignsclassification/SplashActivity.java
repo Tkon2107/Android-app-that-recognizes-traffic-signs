@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
+import com.trafficsignsclassification.penalty.PenaltyRepository;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -26,10 +27,14 @@ public class SplashActivity extends AppCompatActivity {
         );
 
         setContentView(R.layout.activity_splash);
+        
+        // Initialize penalty repository
+        PenaltyRepository penaltyRepository = PenaltyRepository.getInstance(this);
+        penaltyRepository.initialize();
 
         // Set app version text and animation
         TextView versionTextView = findViewById(R.id.versionTextView);
-        versionTextView.setText("Version : 1.0 (Beta)");
+        versionTextView.setText(R.string.version_text);
         Animation versionTextViewAnim = AnimationUtils.loadAnimation(this, R.anim.text_animation);
         versionTextView.startAnimation(versionTextViewAnim);
 
@@ -44,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         titleTextView.startAnimation(textAnimation);
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, MainActivityCameraX.class);
             startActivity(intent);
 
             // Apply fade-in and scale-up animation on transition

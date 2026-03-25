@@ -1,107 +1,113 @@
-# Android App for Traffic Signs Classification using CNN
+# Android App for Traffic Sign Recognition (YOLOv11 + ONNX)
 
-This repository provides an Android application for classifying traffic signs using a pre-trained Convolutional Neural Network (CNN) model. The app is designed for real-time traffic sign recognition and can be used in applications such as driver assistance and autonomous vehicle systems.
+Ứng dụng Android nhận diện biển báo giao thông theo thời gian thực bằng CameraX và mô hình YOLOv11 chạy on-device qua ONNX Runtime.
 
+Dự án đã tích hợp sẵn module OpenCV trong workspace, không cần tải thêm từ repository khác.
 
-For a detailed description of the CNN model and the underlying project, please refer to the main repository: [Traffic Signs Classification Using Convolutional Neural Networks](https://github.com/nishatrhythm/Traffic-Signs-Classification-Using-Convolution-Neural-Networks).
+## Tính năng chính
 
-### 📥 Download the Mobile Application for Android
+- Nhận diện biển báo giao thông theo thời gian thực (live mode).
+- Chụp ảnh và phân tích khung hình tĩnh (capture mode).
+- Vẽ bounding box trực tiếp trên ảnh preview/captured.
+- Hiển thị nhãn biển báo và độ tin cậy.
+- Tra cứu thông tin mức phạt giao thông từ dữ liệu JSON nội bộ.
+- Hỗ trợ bật/tắt flash, xử lý quyền camera, màn hình splash.
 
-Download the app by clicking the button below.
+## Công nghệ sử dụng
 
-### [![Download Button](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/nishatrhythm/OpenCV-Back-up-for-Traffic-Signs-Classification-Android-App/raw/main/Release%20App/Traffic%20Sign.apk)
+- Android SDK (minSdk 24, targetSdk 34)
+- Java
+- CameraX 1.3.1
+- ONNX Runtime Android 1.17.0
+- OpenCV (module nội bộ `:opencv`)
+- Gson (đọc dữ liệu mức phạt từ JSON)
 
-_[**Note**: It may take a few moments for the download to begin, as GitHub generates a direct download link for large files.]_
+## Cấu trúc dự án
 
----
+```text
+app/
+  src/main/
+    java/com/trafficsignsclassification/
+      MainActivityCameraX.java
+      YoloV11Detector.java
+      SplashActivity.java
+      DetectionOverlayView.java
+      ImageUtils.java
+      penalty/
+        PenaltyRepository.java
+        PenaltyDetailActivity.java
+        PenaltyInfo.java
+    assets/
+      best.onnx
+      yolo_labels.txt
+      penalties.json
+opencv/
+model/
+```
 
-## Table of Contents
+## Yêu cầu môi trường
 
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Installation](#installation)
-4. [App Screenshots](#app-screenshots)
-5. [Usage](#usage)
-6. [Model Integration](#model-integration)
-7. [Technical Details](#technical-details)
+- Android Studio Hedgehog (2023.1.1) hoặc mới hơn
+- JDK 11+
+- Android SDK API 24+
+- Thiết bị thật có camera (khuyến nghị) hoặc emulator hỗ trợ camera
 
----
+## Chạy dự án
 
-## Introduction
+1. Mở project trong Android Studio.
+2. Chờ Gradle sync hoàn tất.
+3. Chạy app bằng cấu hình `app` trên thiết bị/emulator.
+4. Cấp quyền camera khi ứng dụng yêu cầu.
 
-The Android app provided in this repository is an extension of the Traffic Signs Classification project that uses a CNN model for detecting and classifying traffic signs into 43 different categories. This app is designed for real-time classification and provides an easy-to-use interface for users to test and experience how AI can assist in understanding traffic signs.
+## Build từ command line
 
----
+```bash
+# Windows
+gradlew.bat assembleDebug
 
-## Features
+# Linux/Mac
+./gradlew assembleDebug
+```
 
-- **Real-time traffic sign recognition** using a pre-trained CNN model.
-- **User-friendly interface** designed for intuitive navigation.
-- **Mobile-optimized performance** with efficient image processing.
+APK debug sau khi build nằm tại:
 
----
+```text
+app/build/outputs/apk/debug/
+```
 
-## Installation
+## Dữ liệu model và nhãn
 
-### Prerequisites
-The app requires OpenCV for image processing functionalities. The OpenCV folder has been kept in a separate repository to reduce the size of this Android app repository.
+- Model ONNX: `app/src/main/assets/best.onnx`
+- File nhãn: `app/src/main/assets/yolo_labels.txt`
+- Dữ liệu mức phạt: `app/src/main/assets/penalties.json`
 
-- **Download the OpenCV library** from the dedicated repository: [OpenCV Back-up for Traffic Signs Classification Android App](https://github.com/nishatrhythm/OpenCV-Back-up-for-Traffic-Signs-Classification-Android-App)
+Lưu ý: trong `app/build.gradle`, dự án đã cấu hình `noCompress "onnx"` để tránh nén model ONNX trong APK.
 
-  Or download directly from [here](https://github.com/nishatrhythm/OpenCV-Back-up-for-Traffic-Signs-Classification-Android-App/raw/main/opencv.zip).
-  
-  _[**Note**: It may take a few moments for the download to begin, as GitHub generates a direct download link for large files.]_
+## Luồng hoạt động chính
 
-### Steps
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/nishatrhythm/Android-App-of-Traffic-Signs-Classification-using-CNN.git
-   cd Android-App-of-Traffic-Signs-Classification-using-CNN
-   ```
-2. Extract the downloaded `opencv.zip` into your Android project directory.
-3. Open the project in Android Studio.
-4. Ensure that your development environment is set up with the necessary SDKs and tools.
-5. Build and run the app on an Android device or emulator.
+1. `SplashActivity` khởi tạo dữ liệu mức phạt.
+2. `MainActivityCameraX` mở camera và xử lý luồng preview bằng CameraX.
+3. `YoloV11Detector` chạy suy luận YOLOv11 qua ONNX Runtime.
+4. `DetectionOverlayView` hiển thị bounding boxes lên UI.
+5. Khi có nhãn phù hợp, người dùng có thể mở `PenaltyDetailActivity` để xem mức phạt.
 
----
+## Tùy chỉnh dữ liệu mức phạt
 
-## App Screenshots
+Bạn có thể cập nhật mức phạt mà không cần huấn luyện lại model:
 
-| ![App Screenshot 1](https://github.com/nishatrhythm/Android-App-of-Traffic-Signs-Classification-using-CNN/blob/main/readme%20images/App_Screenshot_1.PNG) | ![App Screenshot 2](https://github.com/nishatrhythm/Android-App-of-Traffic-Signs-Classification-using-CNN/blob/main/readme%20images/App_Screenshot_2.PNG) | ![App Screenshot 3](https://github.com/nishatrhythm/Android-App-of-Traffic-Signs-Classification-using-CNN/blob/main/readme%20images/App_Screenshot_3.PNG) |
-| --- | --- | --- |
+1. Chỉnh sửa file `app/src/main/assets/penalties.json`.
+2. Build lại ứng dụng.
 
----
+## Tài liệu liên quan trong repo
 
-## Usage
+- `BUILD_INSTRUCTIONS.md`: Hướng dẫn build/test chi tiết.
+- `CAMERAX_IMPLEMENTATION.md`: Chi tiết triển khai CameraX.
+- `IMPLEMENTATION_SUMMARY.md`: Tổng quan triển khai.
+- `NEW_FEATURES_SUMMARY.md`: Mô tả module mức phạt và đánh giá.
+- `MIGRATION_GUIDE.md`: Ghi chú chuyển đổi kiến trúc.
 
-1. Launch the app on your Android device.
-2. Point your device’s camera at a traffic sign.
-3. The app will detect and classify the sign, displaying the classification result in real-time.
+## Ghi chú
 
----
-
-## Model Integration
-
-The app uses a TensorFlow Lite model (`model_trained.tflite`) that was converted from the original trained CNN model. This enables the app to perform efficient on-device inference, ensuring fast and responsive user interactions.
-
-### Model Conversion
-
-The original CNN model, trained using Keras, was converted to a TensorFlow Lite format for use in mobile applications.
-
----
-
-## Technical Details
-
-- **Frameworks Used**: Android SDK, TensorFlow Lite
-- **Languages**: Java, XML
-- **Dependencies**:
-  - TensorFlow Lite library for on-device ML processing.
-  - CameraX for real-time camera feed integration.
-  - OpenCV for image processing.
-
-### File Structure
-
-- `app/src/main/java/`: Contains the main source code, including activities and helper classes.
-- `assets/model_trained.tflite`: The pre-trained TensorFlow Lite model for traffic sign classification.
-- `res/layout/`: XML files defining the UI of the app.
+- Một số tài liệu cũ trong repository có thể vẫn nhắc đến pipeline CNN/TFLite trước đây.
+- Mã nguồn hiện tại trong module app đang chạy YOLOv11 ONNX làm pipeline chính.
 

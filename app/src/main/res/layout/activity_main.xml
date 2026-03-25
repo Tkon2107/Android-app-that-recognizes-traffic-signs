@@ -9,19 +9,21 @@
     <!-- Added ImageView for shared element transition -->
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_launcher"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:transitionName="app_logo_transition" />
+        android:src="@drawable/g5_logo"
+        android:scaleType="fitCenter"
+        android:transitionName="app_logo_transition"
+        android:contentDescription="@string/app_name" />
 
     <!-- Project Name at the Top -->
     <TextView
         android:id="@+id/projectNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Traffic Signs Classification"
+        android:text="@string/project_name"
         android:textColor="#00897B"
         android:textSize="20sp"
         android:fontFamily="@font/netflix_bold"
@@ -46,14 +48,14 @@
         android:layout_alignBottom="@id/textureView"
         android:layout_alignEnd="@id/textureView"
         android:layout_margin="8dp"
-        android:contentDescription="Toggle Flashlight" />
+        android:contentDescription="@string/toggle_flashlight" />
 
     <!-- Text to Display Detected Class -->
     <TextView
         android:id="@+id/classTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Class: "
+        android:text="@string/class_label"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:fontFamily="@font/netflix_bold"
@@ -66,7 +68,7 @@
         android:id="@+id/probabilityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Probability: "
+        android:text="@string/probability_label"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:fontFamily="@font/netflix_bold"
@@ -89,7 +91,7 @@
             android:id="@+id/permissionMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To run this app, please allow camera permission."
+            android:text="@string/permission_message"
             android:textColor="#283593"
             android:fontFamily="@font/netflix_regular"
             android:textSize="16sp"
@@ -104,7 +106,7 @@
             android:height="60dp"
             android:textAllCaps="false"
             android:fontFamily="@font/netflix_bold"
-            android:text="Open Settings"
+            android:text="@string/open_settings"
             android:textColor="@color/white"
             app:backgroundTint="@color/iconColor"
             app:cornerRadius="50dp"
@@ -130,7 +132,7 @@
             android:layout_height="18dp"
             android:src="@drawable/outline_info_24"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Info icon"
+            android:contentDescription="@string/info_icon"
             android:layout_gravity="center_vertical"/>
 
         <!-- Instruction Text -->
@@ -138,7 +140,7 @@
             android:id="@+id/instructionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Keep the image inside the viewfinder rectangle to scan it."
+            android:text="@string/instruction_text"
             android:textColor="#283593"
             android:fontFamily="@font/netflix_regular"
             android:textSize="14sp"/>

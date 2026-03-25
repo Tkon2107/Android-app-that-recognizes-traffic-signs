@@ -35,10 +35,19 @@
             </intent-filter>
         </activity>
 
-        <!-- MainActivity -->
+        <!-- MainActivity with CameraX -->
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityCameraX"
             android:exported="true"
+            android:resizeableActivity="false"
+            android:supportsPictureInPicture="false"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- Penalty Detail Activity -->
+        <activity
+            android:name=".penalty.PenaltyDetailActivity"
+            android:exported="false"
             android:resizeableActivity="false"
             android:supportsPictureInPicture="false"
             android:screenOrientation="portrait">

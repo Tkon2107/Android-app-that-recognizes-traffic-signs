@@ -1,3 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Traffic Signs</string>
+    <string name="app_name">Group 5 DAP</string>
+    
+    <!-- Main Activity -->
+    <string name="project_name">Phân loại biển báo</string>
+    <string name="project_name_beta">Phân loại biển báo BETA</string>
+    <string name="class_label">Loại: </string>
+    <string name="class_na">Loại: N/A</string>
+    <string name="probability_label">Độ chính xác: </string>
+    <string name="probability_na">Độ chính xác: N/A</string>
+    <string name="probability_format">%.2f%%</string>
+    
+    <!-- Permission -->
+    <string name="permission_message">Để chạy ứng dụng này, vui lòng cho phép quyền truy cập camera.</string>
+    <string name="open_settings">Mở Cài Đặt</string>
+    
+    <!-- Instructions -->
+    <string name="instruction_text">Giữ hình ảnh bên trong khung hình chữ nhật để quét.</string>
+    
+    <!-- Flash -->
+    <string name="toggle_flashlight">Bật/Tắt đèn pin</string>
+    <string name="info_icon">Biểu tượng thông tin</string>
+    
+    <!-- Toast Messages -->
+    <string name="flashlight_not_supported">Đèn pin không được hỗ trợ trên thiết bị này</string>
+    <string name="device_no_flashlight">Thiết bị này không hỗ trợ đèn pin</string>
+    <string name="error_accessing_camera">Lỗi khi truy cập tính năng camera</string>
+    <string name="camera_permission_not_granted">Quyền truy cập camera chưa được cấp</string>
+    <string name="error_toggling_flashlight">Lỗi khi bật/tắt đèn pin</string>
+    <string name="unexpected_error">Đã xảy ra lỗi không mong muốn</string>
+    <string name="opencv_loaded">OpenCV đã tải thành công</string>
+    <string name="opencv_failed">Không thể tải OpenCV</string>
+    <string name="camera_setup_failed">Thiết lập camera thất bại</string>
+    
+    <!-- Splash Activity -->
+    <string name="splash_title">Phân Loại Biển Báo Giao Thông\nsử dụng Mạng Nơ-ron Tích Chập</string>
+    <string name="version_text">Phiên bản: 1.0 (Beta)</string>
+    
+    <!-- Capture Mode -->
+    <string name="capture_button">Chụp ảnh</string>
+    <string name="retake_button">Chụp lại</string>
+    <string name="analyze_button">Phân tích</string>
+    <string name="analyzing">Đang phân tích...</string>
+    <string name="unknown_sign">Không nhận dạng được</string>
+    <string name="top_predictions">Dự đoán hàng đầu:</string>
+    <string name="confidence_format">%s: %.1f%%</string>
+    <string name="mode_live">Chế độ: Trực tiếp</string>
+    <string name="mode_capture">Chế độ: Đã chụp</string>
+    <string name="result_label">Kết quả: %s</string>
+    
+    <!-- Penalty Module -->
+    <string name="view_penalty">Xem mức phạt</string>
+    <string name="penalty_details">Chi tiết mức phạt</string>
+    <string name="no_penalty_info">Không có thông tin mức phạt</string>
+    <string name="loading_penalty">Đang tải thông tin...</string>
+    
+    <!-- Evaluation Module -->
+    <string name="performance_monitor">Giám sát hiệu suất</string>
+    <string name="evaluation_mode">Chế độ đánh giá</string>
+    <string name="start_evaluation">Bắt đầu đánh giá</string>
+    <string name="stop_evaluation">Dừng đánh giá</string>
 </resources>
